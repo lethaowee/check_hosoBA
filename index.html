@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Kiểm tra lỗi XML.xlsx</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-asm.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="w">
+      <h1>🔍 Kiểm tra lỗi file XML.xlsx</h1>
+
+      <div class="card">
+        <div id="drop">
+          📂 Kéo thả file .xlsx vào đây hoặc bấm để chọn (có thể thả kèm cả các
+          file .sql)
+          <div class="m" id="fn"></div>
+        </div>
+        <input
+          type="file"
+          id="file"
+          accept=".xlsx,.xlsm,.xls,.csv,.sql,.txt"
+          multiple
+          hidden
+        />
+        <div class="sc" id="schema"></div>
+      </div>
+
+      <div class="card">
+        <details id="rd">
+          <summary>
+            <b>Danh sách rule SQL</b> (bấm để sửa / dán 50 view của bạn)
+          </summary>
+          <p class="m">
+            Định dạng: mỗi rule bắt đầu bằng
+            <code>-- @rule Tên | error</code> (hoặc <code>warn</code>). Dòng
+            <code>-- mô tả</code> ngay sau là mô tả. Câu SELECT trả về các dòng
+            lỗi (nên có cột <code>row_num</code>). Phần trước rule đầu tiên là
+            script chạy trước (tạo view trung gian...).
+          </p>
+          <textarea id="rules" spellcheck="false"></textarea>
+          <div class="row" style="margin-top: 8px">
+            <button id="ldr">📥 Import many .sql files</button>
+            <label class="m"
+              ><input type="checkbox" id="conv" checked /> Auto-convert Access
+              syntax → SQLite</label
+            >
+            <button class="g" id="svr">Tải rule xuống</button>
+            <input type="file" id="rf" accept=".sql,.txt" multiple hidden />
+          </div>
+        </details>
+      </div>
+
+      <div class="card row">
+        <button id="run" disabled>▶ Chạy kiểm tra</button>
+        <button class="g" id="exp" disabled>⬇ Xuất Excel</button>
+        <input
+          type="text"
+          id="q"
+          placeholder="Lọc theo tên rule / nội dung lỗi..."
+        />
+        <label class="m"
+          ><input type="checkbox" id="onlyerr" checked /> Chỉ hiện rule có
+          lỗi</label
+        >
+        <span class="m" id="status">Đang tải thư viện...</span>
+      </div>
+
+      <div id="sum" class="stats"></div>
+      <div id="miss" style="margin-top: 14px"></div>
+      <div id="out" style="margin-top: 14px"></div>
+    </div>
+
+    <script src="js/state.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/access-convert.js"></script>
+    <script src="js/access-functions.js"></script>
+    <script src="js/rules.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
